@@ -1,0 +1,30 @@
+# اطلاعات بسته  
+include $(TOPDIR)/rules.mk  
+
+# نام و نسخه بسته  
+PKG_NAME := block_failed_ips  
+PKG_VERSION := 1.0  
+PKG_RELEASE := 1  
+PKG_SOURCE := $(PKG_NAME)-$(PKG_VERSION).tar.gz  
+PKG_SOURCE_URL := https://github.com/cyberhom/block_failed_ips/archive/refs/tags/v$(PKG_VERSION).tar.gz  
+PKG_HASH := sha256:<your_sha256_hash_here>  # SHA256 فایل را اینجا اضافه کنید  
+
+define Package/block_failed_ips  
+  SECTION := utils  
+  CATEGORY := Utilities  
+  TITLE := Block Failed Login IPs  
+  DEPENDS := python3  
+endef  
+
+define Package/block_failed_ips/description  
+  A script that blocks IPs with more than 6 failed connection attempts.  
+endef  
+
+define Package/block_failed_ips/install  
+    $(INSTALL_DIR) $(1)/usr/local/bin  
+    $(INSTALL_BIN) $(PKG_BUILD_DIR)/main.py $(1)https://github.com/cyberhom/block_failed_ips 
+    $(INSTALL_DIR) $(1)/etc/init.d  
+    $(INSTALL_BIN) $(PKG_BUILD_DIR)/init.d/main $(1)/etc/init.d/main  
+endef  
+
+$(eval $(call BuildPackage,block_failed_ips))
